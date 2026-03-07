@@ -1,16 +1,14 @@
-Idsy Tools
+Idsy Pix
 
-Biblioteca utilitária para PHP contendo helpers para:
+Sistema de Pagamento Instantanio Braslileiro
 
 🚀 Recursos
 
-Convert – Manipulação e conversão de valores
+Consultar
 
-Create – Geração de logs e utilidades
+Receber
 
-Email – Envio de e-mails via SMTP
-
-Validate – Validação de CPF, CNPJ e outros dados
+Token(Gerar um token para vários recebimentos ou consultas)
 
 📦 Requisitos
 
@@ -22,41 +20,19 @@ Composer
 
 Via Composer:
 
-composer require idsy/tools
+composer require ericpereira-br/idsy-pix
 
 🔧 Como usar
-🔹 Convert (Métodos estáticos)
-use Idsy\Tools\Convert;
+🔹 No diretório test tem os exemplos
 
-$valor = "CPF: 123.456.789-00";
-
-$resultado = Convert::onlyNumber($valor);
-
-echo $resultado;
-// Saída: 12345678900
-
-🔹 Email (Instância)
-use Idsy\Tools\Email;
-
-$mail = new Email();
-
-// Configuração SMTP
-$mail->host     = 'smtp.seudominio.com';
-$mail->username = 'usuario';
-$mail->password = 'senha';
-$mail->port     = 587;
-$mail->secure   = 'tls';
-
-// Remetente e destinatário
-$mail->from     = 'remetente@dominio.com';
-$mail->to       = 'destinatario@dominio.com';
-$mail->subject  = 'Título do e-mail';
-$mail->message  = 'Corpo do e-mail';
-
-$mail->send();
 📁 Estrutura do Projeto
 src/
- ├── Convert.php
- ├── Create.php
- ├── Email.php
- └── Validate.php
+ ├── Abstract
+ ├── Bancos
+ ├── Model
+ └── Pix.php
+ test/
+ ├── Consultar.php
+ ├── GetId.php
+ ├── Receber.php
+ └── Token.php
