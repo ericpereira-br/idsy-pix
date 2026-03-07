@@ -4,6 +4,8 @@ Sistema de Pagamento Instantâneo Brasileiro
 
 🚀 Recursos
 
+A princípios foi desenvolvido para o Banco Inter, mas estamos trabalhando para implementar para outros bancos.
+
 Consultar
 
 Receber
