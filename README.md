@@ -20,7 +20,7 @@ Composer
 
 Via Composer:
 
-composer require ericpereira-br/idsy-pix
+composer require idsy/pix
 
 🔧 Como usar
 🔹 No diretório test tem os exemplos
