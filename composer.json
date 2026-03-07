@@ -1,6 +1,6 @@
 {
     "name": "idsy/pix",
-    "description": "Sistema de Pagamento Instantanio Braslileiro",
+    "description": "Sistema de Pagamento Instantâneo Brasileiro (PIX)",
     "type": "library",
 	"license": "MIT",
     "authors": [
