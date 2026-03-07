@@ -1,0 +1,22 @@
+{
+    "name": "idsy/pix",
+    "description": "Sistema de Pagamento Instantanio Braslileiro",
+    "type": "library",
+	"license": "MIT",
+    "authors": [
+        {
+            "name": "ERIC PEREIRA",
+            "email": "eric.pereira.swp@outlook.com"
+        }
+    ],   	
+    "autoload": {
+        "psr-4": {
+            "Idsy\\Pix\\": "src/"
+        }
+    },    
+    "require": {
+        "php": ">=8.0",
+		"ext-openssl": "*",
+        "idsy/tools": "^1.0"
+	}
+}
