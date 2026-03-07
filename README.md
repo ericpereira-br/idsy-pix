@@ -1,6 +1,6 @@
 Idsy Pix
 
-Sistema de Pagamento Instantanio Braslileiro
+Sistema de Pagamento Instantâneo Brasileiro
 
 🚀 Recursos
 
