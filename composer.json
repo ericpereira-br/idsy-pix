@@ -17,6 +17,6 @@
     "require": {
         "php": ">=8.0",
 		"ext-openssl": "*",
-        "idsy/tools": "^1.0"
+        "idsy/tools": "^2.0"
 	}
 }
