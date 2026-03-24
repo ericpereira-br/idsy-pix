@@ -1,7 +1,5 @@
 <?php
 
-namespace idsy\pix;
-
 require '../vendor/autoload.php';
 
 use Idsy\Pix\Pix;

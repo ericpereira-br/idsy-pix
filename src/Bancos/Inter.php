@@ -3,6 +3,7 @@
 namespace Idsy\Pix\bancos;
 
 use Idsy\Pix\Abstract\Banco;
+use Idsy\Tools\Convert;
 use Idsy\Tools\Validate;
 
 class Inter extends Banco {
@@ -61,6 +62,7 @@ class Inter extends Banco {
         if ($this->validarToken()==false) {
             $this->token();
         }
+
         $auth='Authorization: Bearer ' . $this->autenticacao->getAccessToken();
         $cc='x-conta-corrente: '.$this->recebedor->getConta();
         $json='Content-Type: application/json'; 
@@ -134,16 +136,28 @@ class Inter extends Banco {
 
         $jsonResult = json_decode($result);
 
-        if ((!isset($jsonResult->{'status'}) or empty($jsonResult->{'status'}))) {
-            throw new \Exception(json_encode($jsonResult));
+        $status = Convert::jsonToChave($result, 'status');
+
+        if ((!isset($status) or empty($status))) {
+            throw new \Exception('Status não encontrado!');
         }
 
-        if ((!isset($jsonResult->{'pixCopiaECola'}) or empty($jsonResult->{'pixCopiaECola'}))) {
-            throw new \Exception(json_encode($jsonResult));
-        }   
+        $pixCopiaECola = Convert::jsonToChave($result, 'pixCopiaECola');
 
-        $this->detalhe->setStatus($jsonResult->{'status'});
-        $this->detalhe->setPixCopiaECola($jsonResult->{'pixCopiaECola'});        
+        if ((!isset($pixCopiaECola) or empty($pixCopiaECola))) {
+            throw new \Exception('pixCopiaECola não encontrado!');
+        }
+
+        // if ((!isset($jsonResult->{'status'}) or empty($jsonResult->{'status'}))) {
+        //     throw new \Exception(json_encode($jsonResult));
+        // }
+
+        // if ((!isset($jsonResult->{'pixCopiaECola'}) or empty($jsonResult->{'pixCopiaECola'}))) {
+        //     throw new \Exception(json_encode($jsonResult));
+        // }   
+
+        $this->detalhe->setStatus($status);
+        $this->detalhe->setPixCopiaECola($pixCopiaECola);        
     }
 
     public function consultar() : void
@@ -181,51 +195,61 @@ class Inter extends Banco {
             throw new \Exception($result);
         }        
 
-        $jsonResult = json_decode($result);
+        $jsonResult = json_decode($result);        
 
-        if ((!isset($jsonResult->loc->id) or empty($jsonResult->loc->id))) {
-            throw new \Exception('ID não encontrada em: ' . $result);
-        }else{
-            $this->detalhe->setId($jsonResult->loc->id);
-        }        
+        $this->detalhe->setId(Convert::jsonToChave($result, 'id'));        
+        $this->detalhe->setTxid(Convert::jsonToChave($result, 'txid'));        
+        $this->detalhe->setEndToEndId(Convert::jsonToChave($result, 'endToEndId'));                
+        $this->detalhe->setStatus(Convert::jsonToChave($result, 'status'));                        
+        $this->detalhe->setPixCopiaECola(Convert::jsonToChave($result, 'pixCopiaECola'));                                
+        $this->detalhe->setValor(Convert::jsonToChave($result, 'original'));                                        
+        $this->detalhe->setValorPago(Convert::jsonToChave($result, 'valor'));   
+
         
-        if ((!isset($jsonResult->txid) or empty($jsonResult->txid))) {
-            throw new \Exception('Txid não encontrada em: ' . $result);
-        }else{
-            $this->detalhe->setStatus($jsonResult->txid);
-        }  
+
+        // if ((!isset($jsonResult->loc->id) or empty($jsonResult->loc->id))) {
+        //     throw new \Exception('ID não encontrada em: ' . $result);
+        // }else{
+        //     $this->detalhe->setId($jsonResult->loc->id);
+        // }        
         
-        if ((!isset($jsonResult->pix[0]->endToEndId) or empty($jsonResult->pix[0]->endToEndId))) {
-            throw new \Exception('Txid não encontrada em: ' . $result);
-        }else{
-            $this->detalhe->setEndToEndId($jsonResult->pix[0]->endToEndId);
-        }          
+        // if ((!isset($jsonResult->txid) or empty($jsonResult->txid))) {
+        //     throw new \Exception('Txid não encontrada em: ' . $result);
+        // }else{
+        //     $this->detalhe->setStatus($jsonResult->txid);
+        // }  
+        
+        // if ((!isset($jsonResult->pix[0]->endToEndId) or empty($jsonResult->pix[0]->endToEndId))) {
+        //     throw new \Exception('Txid não encontrada em: ' . $result);
+        // }else{
+        //     $this->detalhe->setEndToEndId($jsonResult->pix[0]->endToEndId);
+        // }          
 
-        if ((!isset($jsonResult->status) or empty($jsonResult->status))) {
-            throw new \Exception('Status não encontrada em: ' . $result);
-        }else{
-            $this->detalhe->setStatus($jsonResult->status);
-        }
+        // if ((!isset($jsonResult->status) or empty($jsonResult->status))) {
+        //     throw new \Exception('Status não encontrada em: ' . $result);
+        // }else{
+        //     $this->detalhe->setStatus($jsonResult->status);
+        // }
 
-        if ((!isset($jsonResult->pixCopiaECola) or empty($jsonResult->pixCopiaECola))) {
-            throw new \Exception('PixCopiaECola não encontrada em: ' . $result);
-        }else{
-            $this->detalhe->setPixCopiaECola($jsonResult->pixCopiaECola);
-        }  
+        // if ((!isset($jsonResult->pixCopiaECola) or empty($jsonResult->pixCopiaECola))) {
+        //     throw new \Exception('PixCopiaECola não encontrada em: ' . $result);
+        // }else{
+        //     $this->detalhe->setPixCopiaECola($jsonResult->pixCopiaECola);
+        // }  
 
-        if ((!isset($jsonResult->valor->original) or empty($jsonResult->valor->original))) {
-            throw new \Exception('Valor não encontrada em: ' . $result);
-        }else{
-            $this->detalhe->setValor($jsonResult->valor->original);
-        }
+        // if ((!isset($jsonResult->valor->original) or empty($jsonResult->valor->original))) {
+        //     throw new \Exception('Valor não encontrada em: ' . $result);
+        // }else{
+        //     $this->detalhe->setValor($jsonResult->valor->original);
+        // }
 
-        if ((!isset($jsonResult->pix[0]->valor) or empty($jsonResult->pix[0]->valor))) {
-            throw new \Exception('Valor não encontrada em: ' . $result);
-        }else{
-            $this->detalhe->setValorPago($jsonResult->pix[0]->valor);
-        }
+        // if ((!isset($jsonResult->pix[0]->valor) or empty($jsonResult->pix[0]->valor))) {
+        //     throw new \Exception('Valor não encontrada em: ' . $result);
+        // }else{
+        //     $this->detalhe->setValorPago($jsonResult->pix[0]->valor);
+        // }
 
-        if ((isset($jsonResult->pix[0]->devolucoes) or !empty($jsonResult->pix[0]->devolucoes))) {
+        if ((isset($jsonResult->pix[0]->devolucoes)) or (!empty($jsonResult->pix[0]->devolucoes))) {
             $valorDevolucao = 0;
 
             foreach ($jsonResult->pix[0]->devolucoes as $devolucao) {
@@ -236,18 +260,16 @@ class Inter extends Banco {
             $this->detalhe->devolucoes = $jsonResult->pix[0]->devolucoes;
         }       
         
-        if ((!isset($jsonResult->infoAdicionais) or empty($jsonResult->infoAdicionais))) {
-            throw new \Exception('InfoAdicionais não encontrada em: ' . $result);
-        }else{
+        if ((isset($jsonResult->infoAdicionais)) and (!empty($jsonResult->infoAdicionais))) {
             $this->detalhe->infoAdicionais = $jsonResult->infoAdicionais;
         }        
 
         if ((!isset($jsonResult->calendario->criacao) or empty($jsonResult->calendario->criacao))) {
-            throw new \Exception('Data de criação não encontrada em: ' . $result);
+            throw new \Exception('Pix sem data de criação!');
         }
 
         if ((!isset($jsonResult->calendario->expiracao) or empty($jsonResult->calendario->expiracao))) {
-            throw new \Exception('Data de expiração não encontrada em: ' . $result);
+            throw new \Exception('Pix sem data de expiração!');
         }
         
         if (mb_strtoupper($this->detalhe->getStatus())<>'CONCLUIDA'){        
