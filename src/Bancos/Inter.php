@@ -266,8 +266,10 @@ class Inter extends Banco
             // carrega as devoluções
             $this->detalhe->devolucoes = Convert::arrayToValue($arrayResult, 'devolucoes');
             $valorDevolucao = 0;
-            foreach ($this->detalhe->devolucoes as $devolucao) {
-                $valorDevolucao += Convert::strToFloat($devolucao['valor']);
+            if (!empty($this->detalhe->devolucoes) && is_array($this->detalhe->devolucoes)) {
+                foreach ($this->detalhe->devolucoes as $devolucao) {
+                    $valorDevolucao += Convert::strToFloat($devolucao['valor']);
+                }
             }
 
             $this->detalhe->setValorDevolucao($valorDevolucao);
@@ -279,14 +281,14 @@ class Inter extends Banco
                 $this->detalhe->setStatus('error');
                 $this->detalhe->setReturn("(consultar) Pix sem data de criação...\n");
                 $this->detalhe->setReturnAPI($jsonResult);
-                return;                
+                return;
             }
 
             if ((!isset($expiracao) or empty($expiracao))) {
                 $this->detalhe->setStatus('error');
                 $this->detalhe->setReturn("(consultar) Pix sem data de expiração...\n");
                 $this->detalhe->setReturnAPI($jsonResult);
-                return;                
+                return;
             }
 
             if (mb_strtoupper($this->detalhe->getStatus()) <> 'CONCLUIDA') {
