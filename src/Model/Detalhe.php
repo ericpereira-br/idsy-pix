@@ -6,21 +6,23 @@ use Idsy\Tools\Create;
 
 class Detalhe
 {
-    private string $id;
+    private int $id;
     private string $txid;
     private string $endToEndId;
     private float $valor;
     private float $valorPago;
     private float $valorDevolucao;
-    public array $devolucoes;
+    public null|array $devolucoes;
     private string $solicitacaoPagador;
-    public array $infoAdicionais;
-    private string $status;
+    public null|array $infoAdicionais;
     private string $pixCopiaECola;
+    private string $status;    
+    private string $return;
+    private string $returnAPI;
 
     public function __construct()
     {
-        $this->id                  = "";
+        $this->id                  = 0;
         $this->txid                = "";
         $this->endToEndId          = "";
         $this->valor               = 0;
@@ -29,8 +31,10 @@ class Detalhe
         $this->devolucoes          = [];
         $this->solicitacaoPagador  = "";
         $this->infoAdicionais      = [];
-        $this->status              = "";
         $this->pixCopiaECola       = "";        
+        $this->status              = "";
+        $this->return              = "";
+        $this->returnAPI           = "";
     }
 
     public function getId() : string
@@ -38,7 +42,7 @@ class Detalhe
         return $this->id; 
     }
 
-    public function setId(string $value)
+    public function setId(int $value)
     { 
         $this->id = $value; 
     }
@@ -68,7 +72,6 @@ class Detalhe
     { 
         $this->endToEndId = $value; 
     }
-
 
     /**
      * Altera ou inclui o txid.
@@ -154,6 +157,23 @@ class Detalhe
         ];
     }
 
+    public function getPixCopiaECola() : string
+    { 
+        return $this->pixCopiaECola; 
+    }
+
+    /**
+     * Altera ou inclui o pixCopiaECola.
+     * Codigo usado para pagar o pix.
+     *
+     * @param string $value
+     * @return void
+     */       
+    public function setPixCopiaECola(string $value)
+    { 
+        $this->pixCopiaECola = $value; 
+    }    
+
     /**
      * Status do pagamento.
      * PENDENTE
@@ -191,20 +211,24 @@ class Detalhe
      *
      * @return string
      */     
-    public function getPixCopiaECola() : string
+
+    public function getReturn() : string
     { 
-        return $this->pixCopiaECola; 
+        return $this->return;
     }
 
-    /**
-     * Altera ou inclui o pixCopiaECola.
-     * Codigo usado para pagar o pix.
-     *
-     * @param string $value
-     * @return void
-     */       
-    public function setPixCopiaECola(string $value)
+    public function setReturn(string $value)
     { 
-        $this->pixCopiaECola = $value; 
+        $this->return = $value; 
+    }
+
+    public function getReturnAPI() : string
+    { 
+        return $this->returnAPI;
+    }
+
+    public function setReturnAPI(string $value)
+    { 
+        $this->returnAPI = $value; 
     }
 }
