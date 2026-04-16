@@ -1,13 +1,15 @@
 <?php
 
-namespace Idsy\Pix\abstract;
+namespace Idsy\Pix\Bancos;
 
-use Idsy\Pix\Model\Recebedor;
-use Idsy\Pix\Model\Autenticacao;
-use Idsy\Pix\Model\Devedor;
-use Idsy\Pix\Model\Detalhe;
+use Idsy\Pix\Model\{
+    Recebedor,
+    Autenticacao,
+    Devedor,
+    Detalhe
+};
 
-abstract class Banco{
+abstract class Banco implements BancoInterface{
     private string $result;
     public Autenticacao $autenticacao;
     public Recebedor $recebedor;

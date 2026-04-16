@@ -2,9 +2,7 @@
 
 namespace Idsy\Pix\bancos;
 
-use Idsy\Pix\Abstract\Banco;
 use Idsy\Tools\Convert;
-use Idsy\Tools\Create;
 use Idsy\Tools\Validate;
 
 class Inter extends Banco
@@ -195,6 +193,7 @@ class Inter extends Banco
             if ($this->validarToken() == false) {
                 $this->token();
             }
+            
             $auth = 'Authorization: Bearer ' . $this->autenticacao->getAccessToken();
             $cc = 'x-conta-corrente: ' . $this->recebedor->getConta();
             $json = 'Content-Type: application/json';

@@ -9,6 +9,11 @@ class Recebedor
     private string $tipoChave;
 
     public function __construct()
+    {        
+        $this->toClear();
+    }
+
+    public function toClear(): void
     {
         $this->conta               = "";
         $this->chave               = "";

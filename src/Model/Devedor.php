@@ -10,8 +10,8 @@ namespace Idsy\Pix\Model;
         {                 
             $this->nome                        = '';             
             $this->cpf_cnpj                    = '';
-        }        
-        
+        }  
+       
         public function __construct() 
         {
             $this->toClear();            

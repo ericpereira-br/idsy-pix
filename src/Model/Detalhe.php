@@ -22,6 +22,11 @@ class Detalhe
 
     public function __construct()
     {
+        $this->toClear();
+    }
+
+    public function toClear(): void
+    {
         $this->id                  = 0;
         $this->txid                = "";
         $this->endToEndId          = "";
@@ -34,7 +39,7 @@ class Detalhe
         $this->pixCopiaECola       = "";        
         $this->status              = "";
         $this->return              = "";
-        $this->returnAPI           = "";
+        $this->returnAPI           = "";        
     }
 
     public function getId() : string

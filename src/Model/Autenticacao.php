@@ -15,6 +15,11 @@ class Autenticacao
 
     public function __construct()
     {
+        $this->toClear();
+    }
+
+    public function toClear()
+    {
         $this->certificado      = "";
         $this->chave            = "";
         $this->clientId         = "";
