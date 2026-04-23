@@ -1,6 +1,6 @@
 <?php
 
-namespace Idsy\Pix\bancos;
+namespace Idsy\Pix\Bancos;
 
 use Idsy\Tools\Convert;
 use Idsy\Tools\Validate;
